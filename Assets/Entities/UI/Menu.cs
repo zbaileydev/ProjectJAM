@@ -181,9 +181,9 @@ public class Menu : MonoBehaviour
 
     public void SaveSettings() 
     {
-        PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
-        PlayerPrefs.SetFloat("SoundVolume", soundSlider.value);
-        PlayerPrefs.SetFloat("MainVolume", volumeSlider.value);
+        PlayerPrefs.SetFloat("Music", musicSlider.value);
+        PlayerPrefs.SetFloat("Sound", soundSlider.value);
+        PlayerPrefs.SetFloat("Master", volumeSlider.value);
         PlayerPrefs.SetInt("Resolution", resolutionDropdown.value);
         PlayerPrefs.SetInt("Fullscreen", fullscreenCheckbox.isOn ? 1 : 0);
         PlayerPrefs.Save();
@@ -191,24 +191,41 @@ public class Menu : MonoBehaviour
 
     public void LoadSettings()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
-        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume", 0.75f);
-        volumeSlider.value = PlayerPrefs.GetFloat("MainVolume", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("Music", 0.75f);
+        soundSlider.value = PlayerPrefs.GetFloat("Sound", 0.75f);
+        volumeSlider.value = PlayerPrefs.GetFloat("Master", 0.75f);
         fullscreenCheckbox.isOn = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         resolutionDropdown.value = PlayerPrefs.GetInt("Resolution", resolutionDropdown.value);    
     }
 
     public void ApplySettings()
     {
-        SetVolume("MainVolume", volumeSlider.value);
-        SetVolume("SoundVolume", soundSlider.value);
-        SetVolume("MusicVolume", musicSlider.value);
+        SetVolume("Master", volumeSlider.value);
+        SetVolume("Sound", soundSlider.value);
+        SetVolume("Music", musicSlider.value);
 
         string selectResolution = resolutionDropdown.options[resolutionDropdown.value].text;
         bool isFullscreen = fullscreenCheckbox.isOn;
 
         SetResolution(selectResolution, isFullscreen);
         SaveSettings();
+    }
+
+    IEnumerator LoadAsynchronously(string sceneName)
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync(sceneName);
+        loading.allowSceneActivation = false;
+
+        // Play fade animation
+
+        while (!loading.isDone)
+        {
+            if (loading.progress >= 0.9f)
+            {
+                loading.allowSceneActivation = true;
+            }
+            yield return null;
+        }
     }
 
     
