@@ -1,24 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject optionsMenu;
 
     private bool isPaused = false;
-
-    private void Awake() 
-    {
-        if (FindObjectsOfType<PauseManager>().Length > 1)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     void Update()
     {
@@ -48,5 +39,18 @@ public class PauseManager : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+    }
+
+    public void PauseMenu()
+    {
+        // From the options menu we go back to the pause screen.
+        optionsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+
+    public void OptionsMenu()
+    {
+        optionsMenu.SetActive(true);
+        pauseMenu.SetActive(false);
     }
 }

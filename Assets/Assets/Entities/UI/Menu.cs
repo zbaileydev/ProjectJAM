@@ -31,6 +31,9 @@ public class Menu : MonoBehaviour
     public Toggle fullscreenCheckbox;
     public TMP_Dropdown resolutionDropdown;
 
+    [Header("Managers")]
+    public LevelLoader levelLoader;
+
     private string gameOverLevel;
     private string mainMenuLevel;
 
@@ -51,6 +54,16 @@ public class Menu : MonoBehaviour
         // Many of the options will need to move to a function
         // since we will re-use this for the pause menu
         LoadSettings();
+    }
+
+    public void ClickPlay()
+    {
+        if (menuPanel != null) menuPanel.SetActive(false);
+        if (optionsPanel != null) optionsPanel.SetActive(false);
+        if (creditsPanel != null) creditsPanel.SetActive(false);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        levelLoader.LoadScene(nextSceneIndex);
     }
 
     public void ClickCredits()
@@ -97,6 +110,7 @@ public class Menu : MonoBehaviour
     }
 
     // SFX for interacting with UI elements.
+    /*
     public void PlayHover(){
 		hoverSound.Play();
 	}
@@ -108,6 +122,7 @@ public class Menu : MonoBehaviour
     public void PlayClick(){
         clickSound.Play();
     }
+    */
 
 
     public void SetVolume(string property, float volume)
