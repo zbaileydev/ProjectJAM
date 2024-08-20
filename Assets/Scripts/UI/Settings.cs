@@ -49,9 +49,10 @@ public class Settings : MonoBehaviour
     public void SaveSettings() 
     {
         // PlayerPrefs.SetFloat("Voice", voiceSlider.value);
-        PlayerPrefs.SetFloat("Music", musicSlider.value);
-        PlayerPrefs.SetFloat("Sound", soundSlider.value);
+        PlayerPrefs.SetFloat("BGM", musicSlider.value);
+        PlayerPrefs.SetFloat("SFX", soundSlider.value);
         PlayerPrefs.SetFloat("Master", volumeSlider.value);
+        PlayerPrefs.SetFloat("Voice", voiceSlider.value);
         //PlayerPrefs.SetInt("Resolution", resolutionDropdown.value);
         PlayerPrefs.SetInt("Fullscreen", fullscreenCheckbox.isOn ? 1 : 0);
         PlayerPrefs.Save();
@@ -60,8 +61,9 @@ public class Settings : MonoBehaviour
     public void LoadSettings()
     {
         // voiceSlider.value = PlayerPrefs.GetFloat("Voice", 0.75f);
-        musicSlider.value = PlayerPrefs.GetFloat("Music", 0.75f);
-        soundSlider.value = PlayerPrefs.GetFloat("Sound", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("BGM", 0.75f);
+        soundSlider.value = PlayerPrefs.GetFloat("SFX", 0.75f);
+        voiceSlider.value = PlayerPrefs.GetFloat("Voice", 0.75f);
         volumeSlider.value = PlayerPrefs.GetFloat("Master", 0.75f);
         fullscreenCheckbox.isOn = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         //resolutionDropdown.value = PlayerPrefs.GetInt("Resolution", resolutionDropdown.value);    
@@ -71,8 +73,9 @@ public class Settings : MonoBehaviour
     {
         // SetVolume("Voice", voiceSlider.value);
         SetVolume("Master", volumeSlider.value);
-        SetVolume("Sound", soundSlider.value);
-        SetVolume("Music", musicSlider.value);
+        SetVolume("SFX", soundSlider.value);
+        SetVolume("BGM", musicSlider.value);
+        SetVolume("Voice", voiceSlider.value);
 
         //string selectResolution = resolutionDropdown.options[resolutionDropdown.value].text;
         bool isFullscreen = fullscreenCheckbox.isOn;
